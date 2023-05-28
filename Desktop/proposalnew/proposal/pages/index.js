@@ -1,82 +1,47 @@
-
-import { useState } from "react";
+import React, { useRef } from 'react';
+import styles from './styles.module.css'; // adjust this import to your CSS file location
+import { useRouter } from 'next/router';
 import confetti from "canvas-confetti";
-import emailjs from 'emailjs-com';
-const Home = () => {
-
-  const [formData, setFormData] = useState({
-    email: 'hangalerdenebileg@gmail.com',
-    firstName: 'Khangal',
-    lastName: 'Erdenebileg',
-    subject: 'Amjilttai',
-    message: 'Amjilttai'
-  });
-
-  // send the message and get a callback with an error or details of the message that was sent
-
-  const [state, setState] = useState(0);
-
-  console.log("🚀 ~ Home ~ state:", state)
-
-
-
-  const handleYes = () => {
-    console.log("handleYes is called");
-    console.log("🚀 ~ handleYes ~ formData:", formData)
-    try {
-      emailjs.send(
-        'service_56ozj6o',
-        'template_n07cs49',
-        formData,
-        '5ZFxnp9pcg7yFDyt7'
-      )
-        .then((result) => {
-          console.log(result.text);
-        }, (error) => {
-          console.log(error.text);
-        });
-    } catch (error) {
-      console.log(error)
-    }
-
-
+function MyComponent() {
+  const containerRef = useRef(null);
+  const router = useRouter();
+  const handleClick = () => {
     confetti({
-      particleCount: 150,
-      spread: 360
+      particleCount: 100,
+      spread: 100
     });
-    setStateText("Баярлалаа хайртай шүү үнсий");
-  }
+    containerRef.current.classList.add(styles['is-active']);
+    setTimeout(() => {
+      console.log("This will be logged after 4 seconds");
+      router.push("/mainPage")
+    }, 3500);
 
-  const [stateText, setStateText] = useState("Надтай үерхээч?");
-  const handleClick = (() => {
-    state === 0 ? setState(60) : setState(0);
-    setStateText("За яахав нэг удаадаа өршөөе :)")
-  }
-  )
-
+  };
 
   return (
     <div className="flex justify-center items-center h-screen w-full bg-blue-400">
-      <div className=" bg-white rounded shadow-2xl p-8 m-4 text-black h-64 w-96">
-        <h1>{stateText}</h1>
+      <div ref={containerRef} className={styles.container}>
+        <div className={styles.envelope}>
+          <div className={styles.paper}>
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <div className={styles.noti}>1</div>
+          </div>
+        </div>
+        <div className={styles.open}></div>
         <button
-          className=" w-1/4 bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg  p-2 rounded"
-          type="submit"
-          onClick={() => handleYes()}
+          className=" w-4/4 bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg  p-2 rounded"
+          onClick={handleClick}
         >
-          Yes
-        </button>
-        <button
-          className={"w-1/4 bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg p-2 rounded " + (state === 60 ? 'ml-40' : 'ml-0')}
-          type="submit"
-          onClick={() => handleClick()}
-        >
-          No
+          Нээх
         </button>
       </div>
-
-    </div >
+    </div>
   );
 }
 
-export default Home;
+export default MyComponent;
