@@ -19,8 +19,10 @@ function MyComponent() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen w-full bg-blue-400">
+    <div className="flex justify-center items-center h-screen w-full bg-blue-400 block">
+
       <div ref={containerRef} className={styles.container}>
+
         <div className={styles.envelope}>
           <div className={styles.paper}>
             <ul>
@@ -33,8 +35,9 @@ function MyComponent() {
           </div>
         </div>
         <div className={styles.open}></div>
+        <p className=" font-sans font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-600">ХАМГААС ХӨӨРХӨН ХАНГОГООС ЗАХИА ИРЖЭЭ</p>
         <button
-          className=" w-4/4 bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg  p-2 rounded"
+          className="mt-4 w-4/4 bg-teal-400 hover:bg-teal-600 text-white uppercase text-lg  p-2 rounded"
           onClick={handleClick}
         >
           Нээх
